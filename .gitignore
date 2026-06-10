@@ -1,0 +1,18 @@
+# Training artifacts
+training/__pycache__/
+training/*.pt
+training/*.bin
+training/*.pth
+training/checkpoint-*/
+training/denials-doctor-rcm-*/
+training/runs/
+
+# OS files
+*.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
