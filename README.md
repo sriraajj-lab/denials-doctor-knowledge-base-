@@ -55,3 +55,16 @@ The entire knowledge corpus is designed to be used as:
 ## License
 
 Private - Denials Doctor (Aria Agentic Agency)
+---
+
+## Recent additions (November 2026)
+
+- **`docs/2026-11-customer-journey/`** — the verified customer journey from
+  subscription to implementation, the purchase-journey QA findings that
+  motivated it, and the five-agent Master Rollout Plan.
+- **`fulfillment-bridge/`** — the production checkout-to-account automation
+  (webhook receiver, provisioning router, post-purchase web pages, deploy and
+  verification scripts). All secrets are environment-injected and excluded
+  from the repository. Deployed and verified end-to-end on 2026-11-13.
+- Business documents in `docs/`: AI Agents Playbook, core Playbook, Marketing
+  Agent Playbook (docx + pdf) and the Pricing Sheet.

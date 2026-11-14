@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Denial Desk — DenialsDoctor</title>
+<style>
+:root{--bg:#09090b;--card:#131316;--card2:#17171b;--border:#26262b;--green:#10b981;--blue:#3b82f6;--amber:#f59e0b;--red:#ef4444;--text:#fafafa;--muted:#a1a1aa;--dim:#71717a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55}
+a{color:var(--green);text-decoration:none}
+header{border-bottom:1px solid var(--border);padding:13px 0;position:sticky;top:0;background:rgba(9,9,11,.9);backdrop-filter:blur(8px);z-index:5}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header .wrap{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:17px}.logo b{color:var(--green)}
+.hl{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.plan{font-size:12px;font-weight:700;color:var(--green);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:999px;padding:3px 11px;text-transform:capitalize}
+.out{color:var(--dim);font-size:12.5px}
+h1{font-size:24px;letter-spacing:-.01em;margin:30px 0 4px}
+.lead{color:var(--muted);font-size:14.5px;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:680px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .v{font-size:22px;font-weight:800}
+.stat .k{color:var(--muted);font-size:12.5px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.card h2{font-size:16px;margin-bottom:4px}
+.card .hint{color:var(--muted);font-size:13.5px;margin-bottom:14px}
+.frm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.frm{grid-template-columns:1fr}}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+input,textarea,select{width:100%;padding:11px 12px;background:#0d0d10;border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;font-family:inherit;outline:none}
+input:focus,textarea:focus{border-color:rgba(16,185,129,.5)}
+textarea{resize:vertical;min-height:70px}
+.full{grid-column:1/-1}
+.btn{display:inline-block;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:0;border-radius:9px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn.blue{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}
+td{padding:9px 10px;border-bottom:1px solid rgba(38,38,43,.6);vertical-align:top}
+.pill{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;text-transform:capitalize}
+.pill.pending{background:rgba(245,158,11,.12);color:var(--amber)}
+.pill.won{background:rgba(16,185,129,.12);color:var(--green)}
+.pill.lost{background:rgba(239,68,68,.12);color:#fca5a5}
+.pill.partial,.pill.escalated{background:rgba(59,130,246,.12);color:#93c5fd}
+.msg{margin:12px 0;padding:11px 14px;border-radius:10px;font-size:13.5px;display:none}
+.msg.err{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#fca5a5;display:block}
+.msg.ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.3);color:var(--green);display:block}
+.analysis{white-space:pre-wrap;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:16px;font-size:13.5px;color:#d4d4d8;max-height:420px;overflow:auto}
+.muted{color:var(--dim)}
+.loading{text-align:center;color:var(--muted);padding:40px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="logo">Denials<b>Doctor</b> &nbsp;<span class="out">Denial Desk</span></span>
+  <span class="hl"><span id="email"></span><span class="plan" id="plan">trial</span><a href="#" onclick="logout();return false">Sign out</a></span>
+</div></header>
+
+<div class="wrap" id="main" style="display:none">
+  <h1>Your denial desk</h1>
+  <p class="lead">Add a denied claim, hit Analyze, and you get the appeal strategy, required documents, and a draft letter. Everything you save here stays encrypted in your workspace.</p>
+  <div class="stats">
+    <div class="stat"><div class="v" id="st-total">&ndash;</div><div class="k">Denials tracked</div></div>
+    <div class="stat"><div class="v" id="st-won">&ndash;</div><div class="k">Won / partial</div></div>
+    <div class="stat"><div class="v" id="st-recovered">&ndash;</div><div class="k">Recovered ($)</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Add a denial &amp; analyze it</h2>
+    <p class="hint">Paste exactly what the payer told you — the code from the remittance plus their reason. Tip: the free <a href="/denial-code">Denial Code Lookup</a> tells you what the code means if you're unsure.</p>
+    <div class="msg" id="amsg"></div>
+    <form class="frm" onsubmit="return analyze(event)">
+      <div><label>Claim ID</label><input id="claim_id" placeholder="e.g. CLM-24815"/></div>
+      <div><label>Payer</label><input id="payer" placeholder="e.g. UnitedHealthcare" list="payerlist"/>
+        <datalist id="payerlist"><option>Medicare</option><option>Medicaid</option><option>BlueCross BlueShield</option><option>UnitedHealthcare</option><option>Aetna</option><option>Cigna</option><option>Humana</option><option>TRICARE</option></datalist>
+      </div>
+      <div><label>Denial code (CARC)</label><input id="denial_code" placeholder="e.g. CO-97"/></div>
+      <div><label>Claim amount ($)</label><input id="claim_amount" type="number" step="0.01" min="0" placeholder="e.g. 480.00"/></div>
+      <div class="full"><label>Denial reason / payer's remark</label><textarea id="denial_reason" required placeholder="Paste the payer's remark or describe why the claim was denied"></textarea></div>
+      <div class="full"><button id="abtn" class="btn" type="submit">Analyze this denial</button></div>
+    </form>
+  </div>
+
+  <div class="card" id="acard" style="display:none">
+    <h2 id="atitle">Analysis</h2>
+    <p class="hint" id="ameta"></p>
+    <div class="analysis" id="analysis"></div>
+  </div>
+
+  <div class="card">
+    <h2>Your denials</h2>
+    <p class="hint">Every denial you've analyzed or saved, newest first. Update the outcome as payers respond — that's how your recovered-dollar number grows.</p>
+    <div class="msg" id="lmsg"></div>
+    <div id="denials"><div class="loading">Loading&hellip;</div></div>
+  </div>
+</div>
+
+<div class="wrap" id="nologin" style="display:none">
+  <div class="card" style="margin-top:60px;text-align:center">
+    <h2>Session expired</h2>
+    <p class="hint"><a href="/login">Sign in again &rarr;</a></p>
+  </div>
+</div>
+
+<script>
+const API = "https://api.denialsdoctor.com";
+function tok(){ return sessionStorage.getItem("dd_token") || ""; }
+function h(auth){ const o = {"Content-Type":"application/json"}; if (auth) o["Authorization"] = "Bearer " + tok(); return o; }
+function logout(){ sessionStorage.clear(); location.href = "/login"; }
+
+async function boot(){
+  if (!tok()) { document.getElementById("nologin").style.display = "block"; return; }
+  let me = null;
+  try{
+    const r = await fetch(API + "/auth/me", {headers: h(true)});
+    if (!r.ok) throw 0;
+    me = await r.json();
+  }catch(e){ sessionStorage.clear(); document.getElementById("nologin").style.display = "block"; return; }
+  document.getElementById("email").textContent = me.email;
+  document.getElementById("plan").textContent = me.plan || "member";
+  document.getElementById("main").style.display = "block";
+  loadDenials(); loadStats();
+}
+
+function showMsg(id, cls, text){ const el = document.getElementById(id); el.className = "msg " + cls; el.textContent = text; }
+
+async function loadStats(){
+  try{
+    const r = await fetch(API + "/analytics/summary", {headers: h(true)});
+    if (!r.ok) return;
+    const d = await r.json();
+    if (d && d.total_denials !== undefined) document.getElementById("st-total").textContent = d.total_denials;
+    const byOut = (d && d.by_outcome) || [];
+    const won = byOut.filter(x => x.outcome === "won" || x.outcome === "partial").reduce((a,x)=>a+(x.n||0),0);
+    const rec = byOut.reduce((a,x)=>a+(Number(x.recovered)||0),0);
+    document.getElementById("st-won").textContent = won;
+    document.getElementById("st-recovered").textContent = "$" + Math.round(rec).toLocaleString();
+  }catch(e){}
+}
+
+async function loadDenials(){
+  const box = document.getElementById("denials");
+  try{
+    const r = await fetch(API + "/denials?limit=50", {headers: h(true)});
+    if (!r.ok){ box.innerHTML = '<div class="loading muted">Couldn\'t load denials.</div>'; return; }
+    const rows = await r.json();
+    if (!Array.isArray(rows) || rows.length === 0){
+      box.innerHTML = '<div class="loading">No denials yet — add your first one above.</div>';
+      return;
+    }
+    let html = '<table><tr><th>Date</th><th>Claim</th><th>Payer</th><th>Code</th><th>Amount</th><th>Outcome</th><th></th></tr>';
+    rows.forEach(d => {
+      const amt = d.claim_amount != null ? "$" + Number(d.claim_amount).toLocaleString(undefined,{maximumFractionDigits:2}) : "&mdash;";
+      html += `<tr><td>${(d.created_at||"").slice(0,10) || "&mdash;"}</td><td>${esc(d.claim_id)||"&mdash;"}</td><td>${esc(d.payer)||"&mdash;"}</td><td><b>${esc(d.denial_code)||"&mdash;"}</b></td><td>${amt}</td><td><span class="pill ${esc(d.outcome)||"pending"}">${esc(d.outcome)||"pending"}</span></td>` +
+             `<td><button class="btn ghost" style="padding:6px 12px;font-size:12.5px" onclick="setOutcome('${d.id}','won')">won</button> <button class="btn ghost" style="padding:6px 12px;font-size:12.5px" onclick="setOutcome('${d.id}','lost')">lost</button></td></tr>`;
+    });
+    html += "</table>";
+    box.innerHTML = html;
+  }catch(e){
+    box.innerHTML = '<div class="loading muted">Network error loading denials.</div>';
+  }
+}
+
+function esc(s){ return (s == null ? "" : String(s)).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+async function setOutcome(id, outcome){
+  try{
+    await fetch(API + `/denials/${id}/outcome`, {method:"PATCH", headers: h(true), body: JSON.stringify({outcome: outcome})});
+    loadDenials(); loadStats();
+  }catch(e){ showMsg("lmsg","err","Couldn't update outcome."); }
+}
+
+async function analyze(ev){
+  ev.preventDefault();
+  const btn = document.getElementById("abtn"), msg = document.getElementById("amsg");
+  const reason = document.getElementById("denial_reason").value.trim();
+  if (!reason){ showMsg("amsg","err","Describe the denial reason first."); return false; }
+  const body = {denial_reason: reason};
+  const cid = document.getElementById("claim_id").value.trim();
+  const pay = document.getElementById("payer").value.trim();
+  const code = document.getElementById("denial_code").value.trim();
+  const amt = document.getElementById("claim_amount").value;
+  if (cid) body.claim_id = cid;
+  if (pay) body.payer = pay;
+  if (code) body.denial_code = code;
+  if (amt) body.claim_amount = parseFloat(amt);
+  btn.disabled = true; btn.textContent = "Analyzing\u2026 (this takes ~10-30s)";
+  document.getElementById("acard").style.display = "none";
+  try{
+    const r = await fetch(API + "/denials/analyze", {method:"POST", headers: h(true), body: JSON.stringify(body)});
+    const d = await r.json().catch(()=>({}));
+    if (r.ok && d.analysis){
+      document.getElementById("atitle").textContent = "Analysis" + (body.denial_code ? " — " + body.denial_code : "");
+      document.getElementById("ameta").textContent = `Model: ${d.model_used||""} · ${(d.latency_ms/1000).toFixed(1)||""}s ${d.cached?"· from cache":""} · saved to your denials`;
+      document.getElementById("analysis").textContent = d.analysis;
+      document.getElementById("acard").style.display = "block";
+      showMsg("amsg","ok","Analysis saved to your denials list below.");
+      loadDenials(); loadStats();
+    } else {
+      showMsg("amsg","err",("Analysis failed: " + (d.detail || r.status)).toString());
+    }
+  }catch(e){
+    showMsg("amsg","err","Network error — try again.");
+  }
+  btn.disabled = false; btn.textContent = "Analyze this denial";
+  return false;
+}
+
+boot();
+</script>
+</body>
+</html>
