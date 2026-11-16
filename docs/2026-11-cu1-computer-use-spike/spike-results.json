@@ -1,0 +1,249 @@
+{
+  "summary": {
+    "date": "2026-11-16T19:18:04.574Z",
+    "runs": 10,
+    "returnedStatus": 7,
+    "statusMatch": 7,
+    "exactMatch": 7,
+    "successRatePct": 70,
+    "exactRatePct": 70,
+    "avgSteps": "2.3",
+    "avgDurationS": "42.3",
+    "tokenEquivalentsTotal": 6726,
+    "tokenEquivalentPerTask": 673,
+    "planner": "glm (z-ai-web-dev-sdk), thinking disabled",
+    "driver": "agent-browser 0.43.0 headless",
+    "note": "Token-equivalents = chars/4 over prompt+response; USD comparison vs GPT-6 Luna $0.085/task done in spike report."
+  },
+  "results": [
+    {
+      "n": 1,
+      "session": "cu-spike-1",
+      "claim": "CLM24801",
+      "ok": true,
+      "result": {
+        "claimStatus": "PAID",
+        "carcCode": "",
+        "paidAmount": "$182.40",
+        "statusDate": "2026-11-02",
+        "paymentMethod": "EFT",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 51.7,
+      "tokensEst": 970,
+      "stopReason": "done",
+      "expect": {
+        "status": "PAID",
+        "carc": ""
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 2,
+      "session": "cu-spike-2",
+      "claim": "CLM24802",
+      "ok": true,
+      "result": {
+        "claimStatus": "PAID",
+        "carcCode": "",
+        "paidAmount": "$95.10",
+        "statusDate": "2026-11-04",
+        "paymentMethod": "CHECK",
+        "checkRef": "778213"
+      },
+      "steps": 3,
+      "durationS": 24,
+      "tokensEst": 929,
+      "stopReason": "done",
+      "expect": {
+        "status": "PAID",
+        "carc": ""
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 3,
+      "session": "cu-spike-3",
+      "claim": "CLM24803",
+      "ok": true,
+      "result": {
+        "claimStatus": "DENIED",
+        "carcCode": "CO-97",
+        "paidAmount": "$0.00",
+        "statusDate": "2026-11-05",
+        "paymentMethod": "",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 21.7,
+      "tokensEst": 919,
+      "stopReason": "done",
+      "expect": {
+        "status": "DENIED",
+        "carc": "CO-97"
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 4,
+      "session": "cu-spike-4",
+      "claim": "CLM24804",
+      "ok": true,
+      "result": {
+        "claimStatus": "PAID",
+        "carcCode": "",
+        "paidAmount": "$412.75",
+        "statusDate": "2026-11-06",
+        "paymentMethod": "EFT",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 23.5,
+      "tokensEst": 891,
+      "stopReason": "done",
+      "expect": {
+        "status": "PAID",
+        "carc": ""
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 5,
+      "session": "cu-spike-5",
+      "claim": "CLM24805",
+      "ok": true,
+      "result": {
+        "claimStatus": "DENIED",
+        "carcCode": "CO-16",
+        "paidAmount": "$0.00",
+        "statusDate": "2026-11-07",
+        "paymentMethod": "",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 22.1,
+      "tokensEst": 908,
+      "stopReason": "done",
+      "expect": {
+        "status": "DENIED",
+        "carc": "CO-16"
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 6,
+      "session": "cu-spike-6",
+      "claim": "CLM24806",
+      "ok": true,
+      "result": {
+        "claimStatus": "PENDING",
+        "carcCode": "",
+        "paidAmount": "",
+        "statusDate": "2026-11-09",
+        "paymentMethod": "",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 23.2,
+      "tokensEst": 890,
+      "stopReason": "done",
+      "expect": {
+        "status": "PENDING",
+        "carc": ""
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 7,
+      "session": "cu-spike-7",
+      "claim": "CLM24807",
+      "ok": true,
+      "result": {
+        "claimStatus": "DENIED",
+        "carcCode": "CO-29",
+        "paidAmount": "$0.00",
+        "statusDate": "2026-11-09",
+        "paymentMethod": "",
+        "checkRef": ""
+      },
+      "steps": 3,
+      "durationS": 23.1,
+      "tokensEst": 915,
+      "stopReason": "done",
+      "expect": {
+        "status": "DENIED",
+        "carc": "CO-29"
+      },
+      "statusMatch": true,
+      "carcMatch": true,
+      "exact": true
+    },
+    {
+      "n": 8,
+      "session": "cu-spike-8",
+      "claim": "CLM24808",
+      "ok": false,
+      "result": null,
+      "steps": 2,
+      "durationS": 84.3,
+      "tokensEst": 304,
+      "stopReason": "planner error: API request failed with status 429: {\"error\":\"Too many requests, please try again later\"}",
+      "expect": {
+        "status": "PENDING",
+        "carc": ""
+      },
+      "statusMatch": false,
+      "carcMatch": true,
+      "exact": false
+    },
+    {
+      "n": 9,
+      "session": "cu-spike-9",
+      "claim": "CLM24809",
+      "ok": false,
+      "result": null,
+      "steps": 0,
+      "durationS": 74.2,
+      "tokensEst": 0,
+      "stopReason": "planner error: API request failed with status 429: {\"error\":\"Too many requests, please try again later\"}",
+      "expect": {
+        "status": "PAID",
+        "carc": ""
+      },
+      "statusMatch": false,
+      "carcMatch": true,
+      "exact": false
+    },
+    {
+      "n": 10,
+      "session": "cu-spike-10",
+      "claim": "CLM24810",
+      "ok": false,
+      "result": null,
+      "steps": 0,
+      "durationS": 74.8,
+      "tokensEst": 0,
+      "stopReason": "planner error: API request failed with status 429: {\"error\":\"Too many requests, please try again later\"}",
+      "expect": {
+        "status": "PAID",
+        "carc": ""
+      },
+      "statusMatch": false,
+      "carcMatch": true,
+      "exact": false
+    }
+  ]
+}

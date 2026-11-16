@@ -1,0 +1,56 @@
+[
+  {
+    "claim": "CLM24808",
+    "result": {
+      "claimStatus": "PENDING",
+      "carcCode": "",
+      "paidAmount": "",
+      "statusDate": "2026-11-10",
+      "paymentMethod": "",
+      "checkRef": ""
+    },
+    "steps": 3,
+    "durationS": 22.8,
+    "tokensEst": 910,
+    "statusMatch": true,
+    "carcMatch": true,
+    "exact": true,
+    "stopReason": "done"
+  },
+  {
+    "claim": "CLM24809",
+    "result": {
+      "claimStatus": "PAID",
+      "carcCode": "",
+      "paidAmount": "$1,005.30",
+      "statusDate": "2026-11-11",
+      "paymentMethod": "EFT",
+      "checkRef": ""
+    },
+    "steps": 3,
+    "durationS": 23.8,
+    "tokensEst": 928,
+    "statusMatch": true,
+    "carcMatch": true,
+    "exact": true,
+    "stopReason": "done"
+  },
+  {
+    "claim": "CLM24810",
+    "result": {
+      "claimStatus": "PAID",
+      "carcCode": "",
+      "paidAmount": "$56.00",
+      "statusDate": "2026-11-12",
+      "paymentMethod": "CHECK",
+      "checkRef": "778344"
+    },
+    "steps": 3,
+    "durationS": 22.3,
+    "tokensEst": 912,
+    "statusMatch": true,
+    "carcMatch": true,
+    "exact": true,
+    "stopReason": "done"
+  }
+]
